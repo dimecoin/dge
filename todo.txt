@@ -1,11 +1,10 @@
-
 Build
 	build under bcc
 	clean up all warnings.
 
 Graphics
 	allow differant modes
-	load and display bitmaps
+	save orignal palette
 
 Input
 	keyboard input
@@ -16,9 +15,9 @@ Sound
 	soundblaster
 
 
-
 DONE
 	build under djgpp
 	build under tcc
+	load and display bitmaps
 
 

@@ -23,6 +23,8 @@ byte *screen;
 
 fixed16_16 SIN_ACOS[1024];
 
+bool vsync = true;
+
 void dge_graphics_init(enum RENDER_MODE mode, int width, int height) {
 
 	screen_width = width;
@@ -75,6 +77,17 @@ void dge_graphics_init(enum RENDER_MODE mode, int width, int height) {
 
 }
 
+
+void set_palette(byte * palette) {
+	        int i;
+
+		        outp(PALETTE_INDEX, 0); /* tell the VGA that palette data is coming. */
+			        for (i = 0; i < 256 * 3; i++) {
+					                outp(PALETTE_DATA, palette[i]); /* write the data */
+							        }
+}
+
+
 void dge_graphics_shutdown() {
 
 	if (double_buffer != NULL) {
@@ -99,24 +112,36 @@ void set_mode(byte mode) {
 }
 
 void show_buffer(byte * buffer) {
-#ifdef VERTICAL_RETRACE
-	while ((inp(INPUT_STATUS_1) & VRETRACE)) ;
-	while (!(inp(INPUT_STATUS_1) & VRETRACE)) ;
-#endif
 	memcpy(VGA, buffer, screen_size);
 }
 
 void graphics_begin() {
+
+	if (vsync && render_mode != DOUBLEBUFF) {
+		wait_for_retrace();
+	}
 
 }
 
 void graphics_end() {
 
 	if (render_mode == DOUBLEBUFF) {
+
+		if (vsync) {
+			wait_for_retrace();
+		}
+
 		show_buffer(double_buffer);
 		return;
 	}
 
+}
+
+void wait_for_retrace(void) {
+	/* wait until done with vertical retrace */
+	while ((inp(INPUT_STATUS) & VRETRACE));
+	/* wait until done refreshing */
+	while (!(inp(INPUT_STATUS) & VRETRACE));
 }
 
 void draw_pixel(int x, int y, byte color) {
@@ -300,18 +325,22 @@ void fill_polygon(int num_vertices, int *vertices, byte color) {
 	draw_polygon(num_vertices, vertices, color);
 }
 
-void clear_screen() {
+void clear_screen(byte color) {
 
-	/*
-	   if (render_mode == MEMMAP || render_mode == DOUBLEBUFF) {
-	   memset(screen, 0, screen_size);
-	   if (render_mode == DOUBLEBUFF) {
-	   show_buffer(double_buffer);
-	   }
-	   }
+	if (render_mode == BIOS) {
+		int x, y;
 
-	   set_mode(VGA_256_COLOR_MODE);
-	 */
+		for (x = 0; x < screen_width; x++) {
+			for (y = 0; y < screen_height; y++) {
+				draw_pixel(x, y, color);
+			}
+		}
+	}
+
+	if (render_mode == MEMMAP || render_mode == DOUBLEBUFF) {
+		memset(screen, color, screen_size);
+	}
+
 }
 
 // TODO: draw in BIOS mode, using draw_pixel instead

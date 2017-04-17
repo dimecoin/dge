@@ -31,4 +31,9 @@ tcc.exe -ml -y -G -O -C -j1 -I%INCLUDE% -L%LIB%  *.c
 mkdir %DGE_DIR%\build\tc
 copy *.exe %DGE_DIR%\build\tc
 
+mkdir %DGE_DIR%\build\tc\res
+mkdir %DGE_DIR%\build\tc\res\images
+
+copy %DGE_DIR%\res\images\*.bmp %DGE_DIR%\build\tc\res\images
+
 

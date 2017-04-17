@@ -23,27 +23,36 @@ export BASE_DIR=${DJGPP_PREFIX}
 export PATH:=${WATCOM}/binl:${DJGPP_PREFIX}/bin:${PATH}
 
 
+
 #####################################################
 # Envoriment setup
 
 SRC=src
+INCS=$(SRC)/dge.c $(SRC)/dge_gfx.c $(SRC)/dge_bmp.c
+PRG=splash
 
-default: clean setup tests
+default: clean setup both
 
 setup:
 	mkdir -p build/ow
 	mkdir -p build/dj
 
+	cp -Rp res/ build/ow/res
+	cp -Rp res/ build/dj/res
 
-tests:
-	wcl386 -l=dos4g -lr -4 -ot -oi -lr $(SRC)/test_gfx.c $(SRC)/*.c
-	# $(SRC)/dge.c $(SRC)/dge_graphics.c
-	cp *.exe build/ow
-	ls -l build/ow/*.exe
+both: builddj buildow 
 
-	i586-pc-msdosdjgpp-gcc $(SRC)/*.c -o build/dj/test_gfx.exe
+buildow:
+	wcl386 -l=dos4g -lr -4 -ot -oi -lr $(SRC)/$(PRG).c $(INCS)
+	cp *.exe build/ow;
+	rm *.o
+	ls -l build/ow/*.exe;
+
+
+builddj:
+	i586-pc-msdosdjgpp-gcc $(SRC)/$(PRG).c $(INCS) -o build/dj/$(PRG).exe
 	ls -l build/dj/*.exe
 
 clean:
-	rm *.o *.err *.exe *~ build/ow/* build/dj/* 2> /dev/null || true
+	rm -rf *.o *.err *.exe *~ build/ow/* build/dj/* 2> /dev/null || true
 	rm $(SRC)/*.err $(SRC)/*~ 2> /dev/null || true

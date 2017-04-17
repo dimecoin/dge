@@ -26,35 +26,35 @@ void main(int argc, char *argv[]) {
 
 void runAllTests(enum RENDER_MODE mode) {
 
-	clear_screen();
+	clear_screen(0);
 	runPixelTest(mode);
 	sleep(1);
 
-	clear_screen();
+	clear_screen(0);
 	runLineTest(mode);
 	sleep(1);
 
-	clear_screen();
+	clear_screen(0);
 	runRectTest(mode);
 	sleep(1);
 
-	clear_screen();
+	clear_screen(0);
 	runRectFillTest(mode);
 	sleep(1);
 
-	clear_screen();
+	clear_screen(0);
 	runPolyTest(mode, false);
 	sleep(1);
 
-	clear_screen();
+	clear_screen(0);
 	runPolyTest(mode, true);
 	sleep(1);
 
-	clear_screen();
+	clear_screen(0);
 	runCircleTest(mode, false);
 	sleep(1);
 
-	clear_screen();
+	clear_screen(0);
 	runCircleTest(mode, true);
 	sleep(1);
 
@@ -63,7 +63,7 @@ void runAllTests(enum RENDER_MODE mode) {
 void screenBreaker(enum RENDER_MODE mode) {
 
 	dge_init(mode, 320, 200);
-	clear_screen();
+	clear_screen(0);
 	graphics_begin();
 
 	draw_pixel(-1, -1, 128);
@@ -82,7 +82,7 @@ void runPixelTest(enum RENDER_MODE mode) {
 	word i, start;
 
 	dge_init(mode, 320, 200);
-	clear_screen();
+	clear_screen(0);
 	graphics_begin();
 
 	srand(*my_clock);
@@ -108,7 +108,7 @@ void runLineTest(enum RENDER_MODE mode) {
 	word i, start;
 
 	dge_init(mode, 320, 200);
-	clear_screen();
+	clear_screen(0);
 	graphics_begin();
 
 	srand(*my_clock);
@@ -135,7 +135,7 @@ void runRectTest(enum RENDER_MODE mode) {
 	word i, start;
 
 	dge_init(mode, 320, 200);
-	clear_screen();
+	clear_screen(0);
 	graphics_begin();
 
 	srand(*my_clock);
@@ -165,7 +165,7 @@ void runRectFillTest(enum RENDER_MODE mode) {
 	word i, start;
 
 	dge_init(mode, 320, 200);
-	clear_screen();
+	clear_screen(0);
 	graphics_begin();
 
 	srand(*my_clock);
@@ -195,7 +195,7 @@ void runPolyTest(enum RENDER_MODE mode, bool fill) {
 	int vertices[6];
 
 	dge_init(mode, 320, 200);
-	clear_screen();
+	clear_screen(0);
 	graphics_begin();
 
 	srand(*my_clock);
@@ -234,7 +234,7 @@ void runCircleTest(enum RENDER_MODE mode, bool fill) {
 	word i, start;
 
 	dge_init(mode, 320, 200);
-	clear_screen();
+	clear_screen(0);
 	graphics_begin();
 
 	srand(*my_clock);

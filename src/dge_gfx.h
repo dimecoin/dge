@@ -1,5 +1,5 @@
-#ifndef DGE_GRAPHICS_H
-#define DGE_GRAPHICS_H
+#ifndef DGE_GFX_H
+#define DGE_GFX_H
 
 #include "dge.h"
 
@@ -15,16 +15,23 @@
 
 #define TEXT_MODE           0x03	/* use to set 80x25 text mode. */
 
-// double buffer
-#define INPUT_STATUS_1      0x03da
-
-#define DISPLAY_ENABLE      0x01	/* VGA input status bits */
+#define INPUT_STATUS      0x03da
 #define VRETRACE            0x08
-#define VERTICAL_RETRACE	/*comment out this line for more accurate timing */
+
+// double buffer
+#define DISPLAY_ENABLE      0x01	/* VGA input status bits */
+
+// palette data
+#define PALETTE_INDEX       0x03c8
+#define PALETTE_DATA        0x03c9
 
 extern int screen_width, screen_height, screen_size;
 extern int num_colors;
 extern enum RENDER_MODE render_mode;
+
+// A poor man's vsync.  This still causes screen tearing with BIOS or MEMMAP.
+// TODO: could be done better?  See wait_for_sync
+extern bool vsync;
 
 extern byte *VGA;
 
@@ -36,11 +43,13 @@ extern byte *screen;
 extern fixed16_16 SIN_ACOS[1024];
 
 void dge_graphics_init(enum RENDER_MODE mode, int width, int height);
+void set_palette(byte * palette);
 
 void dge_graphics_shutdown();
 
 void graphics_begin();
 void graphics_end();
+void wait_for_retrace(void);
 
 void set_mode(byte mode);
 
@@ -58,6 +67,6 @@ void fill_circle(int x, int y, int radius, byte color);
 
 void show_buffer(byte * buffer);
 
-void clear_screen();
+void clear_screen(byte color);
 
 #endif
