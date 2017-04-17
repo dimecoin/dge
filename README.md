@@ -1,8 +1,8 @@
 # DGEngine
 
-**DGE** = Dos Game Engine
+![DGEngine Logo](https://github.com/dimecoin/dge/blob/master/res/images/dge_lbig.bmp "DGEngine Logo")
 
-A "modern" DOS Game Engine written in C that is fast, flexiable and has clean API.
+A "modern" **D**OS **G**ame **E**ngine written in C that is fast, flexiable and has clean API.
 
 ## Compatiablity
 
@@ -32,7 +32,6 @@ Logo font is from [DOS VGA 437](http://www.dafont.com/perfect-dos-vga-437.font)
 
 
 ## License
-___
 
 A lot of the rendering code is taken from Dave Breckeen.  His license is as follows:
 * From source files: _"Please feel free to copy this source code."_
@@ -40,9 +39,7 @@ A lot of the rendering code is taken from Dave Breckeen.  His license is as foll
 * His tutorials are marks as [CC BY-SA 2.5](https://creativecommons.org/licenses/by-sa/2.5/)
 * Please check out this site at : http://www.brackeen.com/vga/
 
-___
-
-DOSEngine license :  
+**DOSEngine license :**  
 * MIT License (see license file)
 * We ask that you include "Made with DGEngine" in splash screen or credits, but this is 100% optional and NOT required.
 
