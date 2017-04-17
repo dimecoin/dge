@@ -24,14 +24,14 @@ CPUs
 * Pentium and above!
 * maybe others!
 
-#### Credits
+## Credits
 
 Lots of code is  taken from Dave Brackken's awesome [VGA tutorial](http://www.brackeen.com/vga/) .  This game engine won't have been possiable without this great resource.
 
 Logo font is from [DOS VGA 437](http://www.dafont.com/perfect-dos-vga-437.font)
 
 
-#### License
+## License
 ___
 
 A lot of the rendering code is taken from Dave Breckeen.  His license is as follows:
