@@ -47,9 +47,10 @@ _"This product uses DOS/32 Advanced DOS Extender technology."_
 
 **Runtimes**
 
-Please see runtimes directory for 3rd part licenses for DJGPP and OpenWatcom (DOS32/A).
+Please see runtimes directory for 3rd party licenses for DJGPP and OpenWatcom (DOS32/A).
 
-**DOSEngine license :**  
+**DOSEngine license :** 
+
 * MIT License (see license file)
 * We ask that you include "Made with DGEngine" in splash screen or credits, but this is 100% optional and NOT required.
 
