@@ -1,0 +1,24 @@
+
+Build
+	build under bcc
+	clean up all warnings.
+
+Graphics
+	allow differant modes
+	load and display bitmaps
+
+Input
+	keyboard input
+	mouse input
+
+Sound
+	pc speaker
+	soundblaster
+
+
+
+DONE
+	build under djgpp
+	build under tcc
+
+
