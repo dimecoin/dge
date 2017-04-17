@@ -30,6 +30,10 @@ void main(int argc, char *argv[]) {
 
 	while (true) {
 		render();
+		if (getchar()) {
+			dge_shutdown();
+			exit(1);
+		}
 	}
 
 	dge_shutdown();

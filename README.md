@@ -33,11 +33,18 @@ Logo font is from [DOS VGA 437](http://www.dafont.com/perfect-dos-vga-437.font)
 
 ## License
 
+**Rendering Code**
 A lot of the rendering code is taken from Dave Breckeen.  His license is as follows:
 * From source files: _"Please feel free to copy this source code."_
 * From private email: _"Feel free to do whatever you want with it, no need for credit. Consider it public domain."_
 * His tutorials are marks as [CC BY-SA 2.5](https://creativecommons.org/licenses/by-sa/2.5/)
 * Please check out this site at : http://www.brackeen.com/vga/
+
+**DOS/32 Advanced**
+_"This product uses DOS/32 Advanced DOS Extender technology."_
+
+**Runtimes**
+Please see runtimes directory for 3rd part licenses for DJGPP and OpenWatcom (DOS32/A).
 
 **DOSEngine license :**  
 * MIT License (see license file)

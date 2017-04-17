@@ -13,10 +13,9 @@ void runCircleTest(enum RENDER_MODE mode, bool fill);
 void main(int argc, char *argv[]) {
 
 	while (1) {
-		//runAllTests(BIOS);
-		//runAllTests(MEMMAP);
+		runAllTests(BIOS);
+		runAllTests(MEMMAP);
 		runAllTests(DOUBLEBUFF);
-
 	}
 
 	dge_shutdown();
