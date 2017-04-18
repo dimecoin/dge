@@ -33,8 +33,17 @@ extern enum RENDER_MODE render_mode;
 // TODO: could be done better?  See wait_for_sync
 extern bool vsync;
 
+// If true, then it won't clear screen each cycle.
+// This can save cpu if background doesn't change much, but have to do manually.
+extern bool continuous_rendering;
+
+// Used as clear_screen's defaut
+extern byte background_color;
+
+// Our direct memory buffer
 extern byte *VGA;
 
+// Our double buffer
 extern byte *double_buffer;
 
 // You should write to screen, it's either VGA memmap OR the buffer, depending on rendering mode

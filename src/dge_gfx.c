@@ -25,6 +25,11 @@ fixed16_16 SIN_ACOS[1024];
 
 bool vsync = true;
 
+bool continuous_rendering = false;
+
+byte background_color = 0;
+
+
 void dge_graphics_init(enum RENDER_MODE mode, int width, int height) {
 
 	screen_width = width;
@@ -37,6 +42,7 @@ void dge_graphics_init(enum RENDER_MODE mode, int width, int height) {
 	// Free our double buffer 
 	if (mode != DOUBLEBUFF && double_buffer != NULL) {
 		free(double_buffer);
+		double_buffer = NULL;
 	}
 
 	if (!init_once) {
@@ -54,6 +60,7 @@ void dge_graphics_init(enum RENDER_MODE mode, int width, int height) {
 #endif
 
 	}
+
 	// Finally switch our mode.
 	set_mode(VGA_256_COLOR_MODE);
 
@@ -92,6 +99,7 @@ void dge_graphics_shutdown() {
 
 	if (double_buffer != NULL) {
 		free(double_buffer);
+		double_buffer = NULL;
 	}
 
 	set_mode(TEXT_MODE);
@@ -121,9 +129,15 @@ void graphics_begin() {
 		wait_for_retrace();
 	}
 
+	if (!continuous_rendering) {
+		clear_screen(background_color);
+	}
+
+
 }
 
 void graphics_end() {
+
 
 	if (render_mode == DOUBLEBUFF) {
 
@@ -328,17 +342,28 @@ void fill_polygon(int num_vertices, int *vertices, byte color) {
 void clear_screen(byte color) {
 
 	if (render_mode == BIOS) {
-		int x, y;
+	
+		if (color == 0) {
+			// This si a quick way to clear screen using default color.
+			set_mode(VGA_256_COLOR_MODE);
+			return;
 
-		for (x = 0; x < screen_width; x++) {
-			for (y = 0; y < screen_height; y++) {
-				draw_pixel(x, y, color);
+		} else {
+			int x, y;
+
+			for (x = 0; x < screen_width; x++) {
+				for (y = 0; y < screen_height; y++) {
+					draw_pixel(x, y, color);
+				}
 			}
+			return;
 		}
 	}
 
+
 	if (render_mode == MEMMAP || render_mode == DOUBLEBUFF) {
 		memset(screen, color, screen_size);
+		return;
 	}
 
 }
