@@ -11,7 +11,7 @@ void runPolyTest(enum RENDER_MODE mode, bool fill);
 void runCircleTest(enum RENDER_MODE mode, bool fill);
 
 float sleep_time = 0;
-long object_count = 50L;
+long object_count = 100L;
 
 void main(int argc, char *argv[]) {
 
@@ -40,7 +40,6 @@ void main(int argc, char *argv[]) {
 }
 
 void runAllTests(enum RENDER_MODE mode) {
-
 
 	runPixelTest(mode);
 	sleep(sleep_time);
@@ -81,6 +80,10 @@ void screenBreaker(enum RENDER_MODE mode) {
 
 	draw_line(-1, -1, -1, -1, 128);
 	draw_line(0, 0, screen_width + 1, screen_height + 1, 128);
+
+	draw_circle(-1, -1, 100, 128);
+	fill_circle(-1, -1, 100, 128);
+
 
 	graphics_end();
 }

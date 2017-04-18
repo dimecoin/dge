@@ -40,16 +40,16 @@ setup:
 	cp -Rp res/ build/ow/res
 	cp -Rp res/ build/dj/res
 
-both: builddj buildow 
+both: dj ow
 
-buildow:
+ow:
 	wcl386 -l=dos4g -lr -4 -ot -oi -lr $(SRC)/$(PRG).c $(INCS)
 	cp *.exe build/ow;
 	rm *.o
 	ls -l build/ow/*.exe;
 
 
-builddj:
+dj:
 	i586-pc-msdosdjgpp-gcc -pipe -O2 -fomit-frame-pointer -funroll-loops -ffast-math \
 	       $(SRC)/$(PRG).c $(INCS) -o build/dj/$(PRG).exe
 	ls -l build/dj/*.exe

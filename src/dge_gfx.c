@@ -392,6 +392,18 @@ void clear_screen(byte color) {
 
 }
 
+// This is used internally to bound check our double_buffer, because you can crash if written outside of it.
+// It is only really a problem for DJGPP builds with DOUBLEBUFF... 
+void safe_screen_update(int value, byte color) {
+
+	if (value < 0 || value >= screen_size) {
+		return;
+	}
+
+	screen[value] = color;
+}
+
+
 // TODO: draw in BIOS mode, using draw_pixel instead
 void draw_circle(int x, int y, int radius, byte color) {
 
@@ -403,32 +415,33 @@ void draw_circle(int x, int y, int radius, byte color) {
 		dxoffset = (dx << 8) + (dx << 6);
 		dyoffset = (dy << 8) + (dy << 6);
 
-		screen[offset + dy - dxoffset] = color;	/* octant 0 */
-		screen[offset + dx - dyoffset] = color;	/* octant 1 */
-		screen[offset - dx - dyoffset] = color;	/* octant 2 */
-		screen[offset - dy - dxoffset] = color;	/* octant 3 */
-		screen[offset - dy + dxoffset] = color;	/* octant 4 */
-		screen[offset - dx + dyoffset] = color;	/* octant 5 */
-		screen[offset + dx + dyoffset] = color;	/* octant 6 */
-		screen[offset + dy + dxoffset] = color;	/* octant 7 */
+		if (render_mode == DOUBLEBUFF) {
+
+			safe_screen_update(offset + dy - dxoffset, color);
+			safe_screen_update(offset + dx - dyoffset, color);	/* octant 1 */
+			safe_screen_update(offset - dx - dyoffset, color);	/* octant 2 */
+			safe_screen_update(offset - dy - dxoffset, color);	/* octant 3 */
+			safe_screen_update(offset - dy + dxoffset, color);	/* octant 4 */
+			safe_screen_update(offset - dx + dyoffset, color);	/* octant 5 */
+			safe_screen_update(offset + dx + dyoffset, color);	/* octant 6 */
+			safe_screen_update(offset + dy + dxoffset, color);	/* octant 7 */
+
+		} else {
+			screen[offset + dy - dxoffset] = color;	/* octant 0 */
+			screen[offset + dx - dyoffset] = color;	/* octant 1 */
+			screen[offset - dx - dyoffset] = color;	/* octant 2 */
+			screen[offset - dy - dxoffset] = color;	/* octant 3 */
+			screen[offset - dy + dxoffset] = color;	/* octant 4 */
+			screen[offset - dx + dyoffset] = color;	/* octant 5 */
+			screen[offset + dx + dyoffset] = color;	/* octant 6 */
+			screen[offset + dy + dxoffset] = color;	/* octant 7 */
+		}
 
 		dx++;
 		n += invradius;
 		dy = (int)((radius * SIN_ACOS[(int)(n >> 6)]) >> 16);
 	}
 
-}
-
-// This is used internally to bound check our double_buffer
-// we'll crash if we write outside of it.
-// it's slow us down though :(
-void safe_screen_update(int value, byte color) {
-
-	if (value < 0 || value >= screen_size) {
-		return;
-	}
-
-	screen[value] = color;
 }
 
 // TODO: draw in BIOS mode, using draw_pixel instead
@@ -492,8 +505,8 @@ void set_cursor_pos(int x, int y) {
 	iregs.h.ah = 0x02;	/* set cursor pos */
 	iregs.h.bh = oregs.h.bh;
 
-	iregs.h.dl = (char)x-1;
-	iregs.h.dh = (char)y-1;
+	iregs.h.dl = (char)x - 1;
+	iregs.h.dh = (char)y - 1;
 
 #ifdef __WATCOMC__
 	int386(0x10, &iregs, &oregs);
@@ -506,7 +519,7 @@ void print_text(int x, int y, int color, const char *string) {
 
 	// gotoxy is not support under OpenWatcom.
 	// gotoxy(x,y)
-	
+
 	set_cursor_pos(x, y);
 	printf("\033[1;%dm%s\033[0m\n", color, string);
 }
