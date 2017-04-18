@@ -29,7 +29,7 @@ export PATH:=${WATCOM}/binl:${DJGPP_PREFIX}/bin:${PATH}
 
 SRC=src
 INCS=$(SRC)/dge.c $(SRC)/dge_gfx.c $(SRC)/dge_bmp.c
-PRG=splash
+PRG=test_gfx
 
 default: clean setup both
 
@@ -50,7 +50,8 @@ buildow:
 
 
 builddj:
-	i586-pc-msdosdjgpp-gcc $(SRC)/$(PRG).c $(INCS) -o build/dj/$(PRG).exe
+	i586-pc-msdosdjgpp-gcc -pipe -O2 -fomit-frame-pointer -funroll-loops -ffast-math \
+	       $(SRC)/$(PRG).c $(INCS) -o build/dj/$(PRG).exe
 	ls -l build/dj/*.exe
 
 clean:

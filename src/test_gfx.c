@@ -10,12 +10,28 @@ void runRectFillTest(enum RENDER_MODE mode);
 void runPolyTest(enum RENDER_MODE mode, bool fill);
 void runCircleTest(enum RENDER_MODE mode, bool fill);
 
+float sleep_time = 0;
+long object_count = 50L;
+
 void main(int argc, char *argv[]) {
 
+	enum RENDER_MODE mode;
+	int count = 0;
+	int i = 30;
+	int y = 0;
+
+	mode = DOUBLEBUFF;
+	//mode = MEMMAP;
+
+	continuous_rendering = true;
+	vsync = true;
+
+	dge_init(mode, 320, 200);
+
+	srand(*my_clock);
+
 	while (1) {
-		runAllTests(BIOS);
-		runAllTests(MEMMAP);
-		runAllTests(DOUBLEBUFF);
+		runAllTests(mode);
 	}
 
 	dge_shutdown();
@@ -25,44 +41,39 @@ void main(int argc, char *argv[]) {
 
 void runAllTests(enum RENDER_MODE mode) {
 
-	clear_screen(0);
+
 	runPixelTest(mode);
-	sleep(1);
+	sleep(sleep_time);
 
-	clear_screen(0);
 	runLineTest(mode);
-	sleep(1);
+	sleep(sleep_time);
 
-	clear_screen(0);
 	runRectTest(mode);
-	sleep(1);
+	sleep(sleep_time);
 
-	clear_screen(0);
 	runRectFillTest(mode);
-	sleep(1);
+	sleep(sleep_time);
 
-	clear_screen(0);
 	runPolyTest(mode, false);
-	sleep(1);
+	sleep(sleep_time);
 
-	clear_screen(0);
 	runPolyTest(mode, true);
-	sleep(1);
+	sleep(sleep_time);
 
-	clear_screen(0);
 	runCircleTest(mode, false);
-	sleep(1);
+	sleep(sleep_time);
 
-	clear_screen(0);
 	runCircleTest(mode, true);
-	sleep(1);
+	sleep(sleep_time);
+
+	screenBreaker(mode);
+	sleep(sleep_time);
 
 }
 
 void screenBreaker(enum RENDER_MODE mode) {
 
-	dge_init(mode, 320, 200);
-	clear_screen(0);
+	//dge_init(mode, 320, 200);
 	graphics_begin();
 
 	draw_pixel(-1, -1, 128);
@@ -80,14 +91,13 @@ void runPixelTest(enum RENDER_MODE mode) {
 	float time;
 	word i, start;
 
-	dge_init(mode, 320, 200);
-	clear_screen(0);
+	//dge_init(mode, 320, 200);
 	graphics_begin();
 
 	srand(*my_clock);
 	start = *my_clock;
 
-	for (i = 0; i < 50000L; i++) {
+	for (i = 0; i < object_count; i++) {
 		x = rand() % screen_width;
 		y = rand() % screen_height;
 		color = rand() % num_colors;
@@ -106,13 +116,12 @@ void runLineTest(enum RENDER_MODE mode) {
 	float time;
 	word i, start;
 
-	dge_init(mode, 320, 200);
-	clear_screen(0);
+	//dge_init(mode, 320, 200);
 	graphics_begin();
 
 	srand(*my_clock);
 	start = *my_clock;
-	for (i = 0; i < 5000; i++) {
+	for (i = 0; i < object_count; i++) {
 
 		x1 = rand() % screen_width;
 		y1 = rand() % screen_height;
@@ -133,14 +142,13 @@ void runRectTest(enum RENDER_MODE mode) {
 	float time;
 	word i, start;
 
-	dge_init(mode, 320, 200);
-	clear_screen(0);
+	//dge_init(mode, 320, 200);
 	graphics_begin();
 
 	srand(*my_clock);
 	start = *my_clock;
 
-	for (i = 0; i < 5000; i++) {
+	for (i = 0; i < object_count; i++) {
 
 		x1 = rand() % screen_width;
 		y1 = rand() % screen_height;
@@ -163,14 +171,13 @@ void runRectFillTest(enum RENDER_MODE mode) {
 	float time;
 	word i, start;
 
-	dge_init(mode, 320, 200);
-	clear_screen(0);
+	//dge_init(mode, 320, 200);
 	graphics_begin();
 
 	srand(*my_clock);
 	start = *my_clock;
 
-	for (i = 0; i < 5000; i++) {
+	for (i = 0; i < object_count; i++) {
 
 		x1 = rand() % screen_width;
 		y1 = rand() % screen_height;
@@ -193,14 +200,13 @@ void runPolyTest(enum RENDER_MODE mode, bool fill) {
 	word i, start;
 	int vertices[6];
 
-	dge_init(mode, 320, 200);
-	clear_screen(0);
+	//dge_init(mode, 320, 200);
 	graphics_begin();
 
 	srand(*my_clock);
 	start = *my_clock;
 
-	for (i = 0; i < 5000; i++) {
+	for (i = 0; i < object_count; i++) {
 
 		vertices[0] = rand() % screen_width;
 		vertices[1] = rand() % screen_height;
@@ -232,14 +238,13 @@ void runCircleTest(enum RENDER_MODE mode, bool fill) {
 	float time;
 	word i, start;
 
-	dge_init(mode, 320, 200);
-	clear_screen(0);
+	//dge_init(mode, 320, 200);
 	graphics_begin();
 
 	srand(*my_clock);
 	start = *my_clock;
 
-	for (i = 0; i < 500; i++) {
+	for (i = 0; i < object_count; i++) {
 		radius = rand() % 90 + 1;
 		x = rand() % (screen_width - radius * 2) + radius;
 		y = rand() % (screen_height - radius * 2) + radius;

@@ -18,6 +18,7 @@ void dge_init(enum RENDER_MODE mode, int width, int height) {
 #ifdef __DJGPP__
 
 	if (!init_once) {
+
 		if (__djgpp_nearptr_enable() == 0) {
 			printf("Could get access to first 640K of memory.\n");
 			exit(-1);

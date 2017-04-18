@@ -29,6 +29,9 @@ bool continuous_rendering = false;
 
 byte background_color = 0;
 
+int fps_counter, fps_avg;
+word clock_start_time;
+float clock_cum_time, delta;
 
 void dge_graphics_init(enum RENDER_MODE mode, int width, int height) {
 
@@ -60,7 +63,6 @@ void dge_graphics_init(enum RENDER_MODE mode, int width, int height) {
 #endif
 
 	}
-
 	// Finally switch our mode.
 	set_mode(VGA_256_COLOR_MODE);
 
@@ -84,16 +86,14 @@ void dge_graphics_init(enum RENDER_MODE mode, int width, int height) {
 
 }
 
-
 void set_palette(byte * palette) {
-	        int i;
+	int i;
 
-		        outp(PALETTE_INDEX, 0); /* tell the VGA that palette data is coming. */
-			        for (i = 0; i < 256 * 3; i++) {
-					                outp(PALETTE_DATA, palette[i]); /* write the data */
-							        }
+	outp(PALETTE_INDEX, 0);	/* tell the VGA that palette data is coming. */
+	for (i = 0; i < 256 * 3; i++) {
+		outp(PALETTE_DATA, palette[i]);	/* write the data */
+	}
 }
-
 
 void dge_graphics_shutdown() {
 
@@ -125,6 +125,8 @@ void show_buffer(byte * buffer) {
 
 void graphics_begin() {
 
+	clock_start_time = *my_clock;
+
 	if (vsync && render_mode != DOUBLEBUFF) {
 		wait_for_retrace();
 	}
@@ -133,11 +135,12 @@ void graphics_begin() {
 		clear_screen(background_color);
 	}
 
-
 }
 
 void graphics_end() {
 
+	char fps_text[8];
+	char delta_text[13];
 
 	if (render_mode == DOUBLEBUFF) {
 
@@ -146,16 +149,38 @@ void graphics_end() {
 		}
 
 		show_buffer(double_buffer);
-		return;
+	}
+
+	sprintf(fps_text, "FPS: %d", fps_avg);
+	print_text(1, 1, PFC_GREEN, fps_text);
+
+	delta = (*my_clock - clock_start_time) / CLOCK_SPEED;
+	if (delta >= 100) {
+		delta = 99.999;
+	}
+	sprintf(delta_text, "delta: %.3f", delta);
+	print_text(1, 2, PFC_LIME, delta_text);
+
+	fps_counter++;
+	clock_cum_time += delta;
+	if (clock_cum_time >= 1.0f) {
+		fps_avg = fps_counter;
+
+		if (fps_avg > 999) {
+			fps_avg = 999;
+		}
+
+		fps_counter = 0;
+		clock_cum_time = 0;
 	}
 
 }
 
 void wait_for_retrace(void) {
 	/* wait until done with vertical retrace */
-	while ((inp(INPUT_STATUS) & VRETRACE));
+	while ((inp(INPUT_STATUS) & VRETRACE)) ;
 	/* wait until done refreshing */
-	while (!(inp(INPUT_STATUS) & VRETRACE));
+	while (!(inp(INPUT_STATUS) & VRETRACE)) ;
 }
 
 void draw_pixel(int x, int y, byte color) {
@@ -342,7 +367,7 @@ void fill_polygon(int num_vertices, int *vertices, byte color) {
 void clear_screen(byte color) {
 
 	if (render_mode == BIOS) {
-	
+
 		if (color == 0) {
 			// This si a quick way to clear screen using default color.
 			set_mode(VGA_256_COLOR_MODE);
@@ -359,7 +384,6 @@ void clear_screen(byte color) {
 			return;
 		}
 	}
-
 
 	if (render_mode == MEMMAP || render_mode == DOUBLEBUFF) {
 		memset(screen, color, screen_size);
@@ -451,4 +475,38 @@ void fill_circle(int x, int y, int radius, byte color) {
 		n += invradius;
 		dy = (int)((radius * SIN_ACOS[(int)(n >> 6)]) >> 16);
 	}
+}
+
+void set_cursor_pos(int x, int y) {
+
+	union REGS iregs, oregs;
+
+	iregs.h.ah = 0x0f;	/* get video page */
+
+#ifdef __WATCOMC__
+	int386(0x10, &iregs, &oregs);
+#else
+	int86(0x10, &iregs, &oregs);
+#endif
+
+	iregs.h.ah = 0x02;	/* set cursor pos */
+	iregs.h.bh = oregs.h.bh;
+
+	iregs.h.dl = (char)x-1;
+	iregs.h.dh = (char)y-1;
+
+#ifdef __WATCOMC__
+	int386(0x10, &iregs, &oregs);
+#else
+	int86(0x10, &iregs, &oregs);
+#endif
+}
+
+void print_text(int x, int y, int color, const char *string) {
+
+	// gotoxy is not support under OpenWatcom.
+	// gotoxy(x,y)
+	
+	set_cursor_pos(x, y);
+	printf("\033[1;%dm%s\033[0m\n", color, string);
 }

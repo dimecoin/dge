@@ -22,7 +22,9 @@ Other
 	Add mclock variable/macro
 	add splash screen
 
-
+Config
+	Readable config
+	Setup menu/Writeable config.
 
 DONE
 	build under djgpp

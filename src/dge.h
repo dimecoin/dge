@@ -41,6 +41,7 @@ enum RENDER_MODE {
 
 /* this points to the 18.2hz system clock */
 extern word *my_clock;
+#define CLOCK_SPEED 18.2
 
 extern bool init_once;
 
