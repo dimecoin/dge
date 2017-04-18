@@ -1,3 +1,4 @@
+
 Build
 	build under bcc
 	clean up all warnings.
@@ -5,6 +6,8 @@ Build
 Graphics
 	allow differant modes
 	save orignal palette
+	animations
+	xmode/unchained.
 
 Input
 	keyboard input
@@ -13,6 +16,12 @@ Input
 Sound
 	pc speaker
 	soundblaster
+
+Other
+	add build type
+	Add mclock variable/macro
+	add splash screen
+
 
 
 DONE
