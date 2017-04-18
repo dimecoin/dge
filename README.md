@@ -24,6 +24,12 @@ CPUs
 * Pentium and above!
 * maybe others!
 
+## Usage
+
+Please see [wiki pages](https://github.com/dimecoin/dge/wiki) for details.
+
+
+
 ## Credits
 
 Lots of code is  taken from Dave Brackken's awesome [VGA tutorial](http://www.brackeen.com/vga/) .  This game engine won't have been possiable without this great resource.
