@@ -4,6 +4,11 @@
 
 A "modern" **D**OS **G**ame **E**ngine written in C that is fast, flexiable and has clean API.
 
+## Screen shots
+
+![screenshot_1](https://github.com/dimecoin/dge/blob/master/screenshots/screenshot_1.png "screen_shot1")
+![screenshot_2](https://github.com/dimecoin/dge/blob/master/screenshots/screenshot_2.png "screen_shot2")
+
 ## Compatiablity
 
 Operating Systems:
