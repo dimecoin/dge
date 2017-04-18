@@ -38,7 +38,7 @@ Logo font is from [DOS VGA 437](http://www.dafont.com/perfect-dos-vga-437.font)
 A lot of the rendering code is taken from Dave Breckeen.  His license is as follows:
 * From source files: _"Please feel free to copy this source code."_
 * From private email: _"Feel free to do whatever you want with it, no need for credit. Consider it public domain."_
-* His tutorials are marks as [CC BY-SA 2.5](https://creativecommons.org/licenses/by-sa/2.5/)
+* His tutorials are marked as [CC BY-SA 2.5](https://creativecommons.org/licenses/by-sa/2.5/)
 * Please check out this site at : http://www.brackeen.com/vga/
 
 **DOS/32 Advanced**
