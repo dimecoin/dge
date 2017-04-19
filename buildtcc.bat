@@ -28,7 +28,7 @@ cd %DGE_DIR%\src
 delete *.OBJ
 delete *.EXE
 
-tcc.exe -ml -y -G -O -C -j1 -I%INCLUDE% -L%LIB% %1.c dge.c dge_bmp.c dge_gfx.c
+tcc.exe -ml -y -G -O -C -j1 -I%INCLUDE% -L%LIB% %1.c dge.c dge_bmp.c dge_gfx.c dge_snd.c
 
 mkdir %DGE_DIR%\build\tc
 copy *.exe %DGE_DIR%\build\tc
