@@ -29,6 +29,8 @@ bool continuous_rendering = false;
 
 byte background_color = 0;
 
+bool show_fps = true;
+
 int fps_counter, fps_avg;
 word clock_start_time;
 float clock_cum_time, delta;
@@ -137,10 +139,10 @@ void graphics_begin() {
 
 }
 
+char fps_text[8];
+char delta_text[13];
 void graphics_end() {
 
-	char fps_text[8];
-	char delta_text[13];
 
 	if (render_mode == DOUBLEBUFF) {
 
@@ -151,27 +153,31 @@ void graphics_end() {
 		show_buffer(double_buffer);
 	}
 
-	sprintf(fps_text, "FPS: %d", fps_avg);
-	print_text(1, 1, PFC_GREEN, fps_text);
-
 	delta = (*my_clock - clock_start_time) / CLOCK_SPEED;
 	if (delta >= 100) {
 		delta = 99.999;
 	}
-	sprintf(delta_text, "delta: %.3f", delta);
-	print_text(1, 2, PFC_LIME, delta_text);
 
-	fps_counter++;
-	clock_cum_time += delta;
-	if (clock_cum_time >= 1.0f) {
-		fps_avg = fps_counter;
+	if (show_fps) {
 
-		if (fps_avg > 999) {
-			fps_avg = 999;
+		sprintf(fps_text, "FPS: %d", fps_avg);
+		print_text(1, 1, PFC_GREEN, fps_text);
+
+		sprintf(delta_text, "delta: %.3f", delta);
+		print_text(1, 2, PFC_LIME, delta_text);
+
+		fps_counter++;
+		clock_cum_time += delta;
+		if (clock_cum_time >= 1.0f) {
+			fps_avg = fps_counter;
+
+			if (fps_avg > 999) {
+				fps_avg = 999;
+			}
+
+			fps_counter = 0;
+			clock_cum_time = 0;
 		}
-
-		fps_counter = 0;
-		clock_cum_time = 0;
 	}
 
 }

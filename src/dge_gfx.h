@@ -67,6 +67,7 @@ extern byte *screen;
 
 extern fixed16_16 SIN_ACOS[1024];
 
+extern bool show_fps;
 extern int fps_counter, fps_avg;
 extern word clock_start_time;
 extern float clock_cum_time, delta;

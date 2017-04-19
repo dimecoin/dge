@@ -27,6 +27,7 @@ void main(int argc, char *argv[]) {
 
 	continuous_rendering = true;
 	vsync = true;
+	show_fps=true;
 
 	dge_init(mode, 320, 200);
 
