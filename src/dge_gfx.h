@@ -28,19 +28,18 @@
 
 // PFC = Primative Font Color.  L=Light
 // These are used with print_text
-#define PFC_SKYBLUE 31
-#define PFC_LGREEN 32
-#define PFC_LBLUE 33
-#define PFC_LRED 34
-#define PFC_PINK 35
-#define PFC_YELLOW 36
+#define PFC_RED 31
+#define PFC_LIGHTGREEN 32
+#define PFC_YELLOW 33
+#define PFC_PURPLE 34
+#define PFC_BOLDPINK 35
+#define PFC_LBLUE 36
 #define PFC_WHITE 37
-#define PFC_LPINK_41
 #define PFC_GREEN 42
-#define PFC_BLUE 43
+#define PFC_BRICKRED 43
 #define PFC_LIME 45
-#define PFC_PURPLE 46
-#define PFC_RED 47
+#define PFC_PINK 46
+#define PFC_BLUE 47
 
 extern int screen_width, screen_height, screen_size;
 extern int num_colors;

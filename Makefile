@@ -23,13 +23,12 @@ export BASE_DIR=${DJGPP_PREFIX}
 export PATH:=${WATCOM}/binl:${DJGPP_PREFIX}/bin:${PATH}
 
 
-
 #####################################################
 # Envoriment setup
 
 SRC=src
 INCS=$(SRC)/dge.c $(SRC)/dge_gfx.c $(SRC)/dge_bmp.c $(SRC)/dge_snd.c
-PRG=test_snd
+PRG=test_gfx
 
 default: clean setup both
 

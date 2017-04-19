@@ -10,6 +10,8 @@ void runRectFillTest(enum RENDER_MODE mode);
 void runPolyTest(enum RENDER_MODE mode, bool fill);
 void runCircleTest(enum RENDER_MODE mode, bool fill);
 
+void fontColorTest();
+
 float sleep_time = 0;
 long object_count = 100L;
 
@@ -28,10 +30,11 @@ void main(int argc, char *argv[]) {
 
 	dge_init(mode, 320, 200);
 
-	srand(*my_clock);
-
 	while (1) {
-		runAllTests(mode);
+		//runAllTests(mode);
+
+		fontColorTest();
+
 	}
 
 	dge_shutdown();
@@ -83,7 +86,6 @@ void screenBreaker(enum RENDER_MODE mode) {
 
 	draw_circle(-1, -1, 100, 128);
 	fill_circle(-1, -1, 100, 128);
-
 
 	graphics_end();
 }
@@ -262,5 +264,28 @@ void runCircleTest(enum RENDER_MODE mode, bool fill) {
 	graphics_end();
 
 	time = (*my_clock - start) / 18.2;
+
+}
+
+void fontColorTest() {
+
+	graphics_begin();
+
+
+	print_text( 5, 5,  PFC_RED, "PFC_RED");
+	print_text( 5, 6,  PFC_LIGHTGREEN, "PFC_LIGHTGREEN");
+	print_text( 5, 7,  PFC_YELLOW, "PFC_YELLOW");
+	print_text( 5, 8,  PFC_PURPLE, "PFC_PURPLE");
+	print_text( 5, 9,  PFC_BOLDPINK, "PFC_BOLDPINK");
+	print_text( 5, 10,  PFC_LBLUE, "PFC_LBLUE");
+	print_text( 5, 11,  PFC_WHITE, "PFC_WHITE");
+	print_text( 5, 12,  PFC_GREEN, "PFC_GREEN");
+	print_text( 5, 13,  PFC_BRICKRED, "PFC_BRICKRED");
+	print_text( 5, 14,  PFC_LIME, "PFC_LIME");
+	print_text( 5, 15,  PFC_PINK, "PFC_PINK");
+	print_text( 5, 16,  PFC_BLUE, "PFC_BLUE");
+
+
+	graphics_end();
 
 }
