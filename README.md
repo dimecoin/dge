@@ -12,6 +12,22 @@ A "modern" **D**OS **G**ame **E**ngine written in C that is fast, flexiable and 
 
 More screenshots in [Screen Shots Directory](https://github.com/dimecoin/dge/tree/master/screenshots)
 
+## Feature List
+
+* Runs on most DOS versions and emulators.  (see Compatiablity below).  
+* Compiles cleanly in most DOS compilers.  (see Compatiablity below).
+* No assembly required, easy to use C API that abstracts BIOS/System calls, etc.
+* mode 13h: VGA 320x200 @ 256 colors  (ie, Classic "Chunky Graphics")
+* Rendering systems: Direct BIOS writes, Memory Map and Double Buffer.  Can easily create "retro" effects using BIOS/MEMMAP or get smooth graphics from DOUBLEBUFF.
+* Primative shapes (points, lines, rectangles, polys, circles and fill/color modes).
+* FPS/Delta counters.
+* PC Speaker sounds.
+* Text mode fonts for debugging.
+
+**More features to come!**
+Please see [todo.txt](https://github.com/dimecoin/dge/blob/master/todo.txt) for details.
+
+
 ## Compatiablity
 
 Operating Systems:
