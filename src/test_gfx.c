@@ -25,7 +25,7 @@ void main(int argc, char *argv[]) {
 	mode = DOUBLEBUFF;
 	//mode = MEMMAP;
 
-	continuous_rendering = true;
+	continuous_rendering = false;
 	vsync = true;
 	show_fps=true;
 
@@ -34,7 +34,8 @@ void main(int argc, char *argv[]) {
 	while (1) {
 		//runAllTests(mode);
 
-		fontColorTest();
+		runCircleTest(mode, false);
+		//fontColorTest();
 
 	}
 
