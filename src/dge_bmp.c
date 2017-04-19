@@ -95,7 +95,3 @@ void draw_transparent_bitmap(BITMAP * bmp, int x, int y) {
 		screen_offset += screen_width;
 	}
 }
-
-
-
-

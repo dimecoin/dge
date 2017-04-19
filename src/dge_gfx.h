@@ -25,7 +25,6 @@
 #define PALETTE_INDEX       0x03c8
 #define PALETTE_DATA        0x03c9
 
-
 // PFC = Primative Font Color.  L=Light
 // These are used with print_text
 #define PFC_RED 31
@@ -72,7 +71,6 @@ extern int fps_counter, fps_avg;
 extern word clock_start_time;
 extern float clock_cum_time, delta;
 
-
 void dge_graphics_init(enum RENDER_MODE mode, int width, int height);
 void set_palette(byte * palette);
 
@@ -85,7 +83,7 @@ void wait_for_retrace(void);
 // This is used internally to bound check our double_buffer, because you can crash if written outside of it.
 // It is only really a problem for DJGPP builds with DOUBLEBUFF...
 // In dge.h you can disable BOUND_CHECK
-void screen_update(int value, byte color); 
+void screen_update(int value, byte color);
 
 void set_mode(byte mode);
 
@@ -106,7 +104,6 @@ void show_buffer(byte * buffer);
 // Used by print_text to position.
 void set_cursor_pos(int x, int y);
 
-
 /*
  * This is a very primative way to print text in graphics mode.
  * It's pretty ulgy, probably only for debugging.
@@ -114,8 +111,6 @@ void set_cursor_pos(int x, int y);
  * use PFC_X  for colors
 */
 void print_text(int x, int y, int color, const char *string);
-
-
 
 void clear_screen(byte color);
 

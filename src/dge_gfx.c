@@ -142,7 +142,6 @@ char fps_text[9];
 char delta_text[13];
 void graphics_end() {
 
-
 	if (render_mode == DOUBLEBUFF) {
 
 		if (vsync) {
@@ -291,11 +290,11 @@ void draw_rect(int left, int top, int right, int bottom, byte color) {
 
 		for (i = left; i <= right; i++) {
 			screen_update(top_offset + i, color);
-			screen_update(bottom_offset + i,color);
+			screen_update(bottom_offset + i, color);
 		}
 		for (i = top_offset; i <= bottom_offset; i += screen_width) {
-			screen_update(left + i,  color);
-			screen_update(right + i,  color);
+			screen_update(left + i, color);
+			screen_update(right + i, color);
 		}
 
 		return;
@@ -398,8 +397,8 @@ void clear_screen(byte color) {
 }
 
 #if defined (__DJGPP__) || defined (__WATCOMC__)
-inline 
-#endif 
+inline
+#endif
 // Should this be defined as macro?  Might be slow for Turbo C
 void screen_update(int value, byte color) {
 
@@ -412,7 +411,6 @@ void screen_update(int value, byte color) {
 	screen[value] = color;
 }
 
-
 // TODO: draw in BIOS mode, using draw_pixel instead
 void draw_circle(int x, int y, int radius, byte color) {
 
@@ -424,14 +422,14 @@ void draw_circle(int x, int y, int radius, byte color) {
 		dxoffset = (dx << 8) + (dx << 6);
 		dyoffset = (dy << 8) + (dy << 6);
 
-			screen_update(offset + dy - dxoffset, color);
-			screen_update(offset + dx - dyoffset, color);	/* octant 1 */
-			screen_update(offset - dx - dyoffset, color);	/* octant 2 */
-			screen_update(offset - dy - dxoffset, color);	/* octant 3 */
-			screen_update(offset - dy + dxoffset, color);	/* octant 4 */
-			screen_update(offset - dx + dyoffset, color);	/* octant 5 */
-			screen_update(offset + dx + dyoffset, color);	/* octant 6 */
-			screen_update(offset + dy + dxoffset, color);	/* octant 7 */
+		screen_update(offset + dy - dxoffset, color);
+		screen_update(offset + dx - dyoffset, color);	/* octant 1 */
+		screen_update(offset - dx - dyoffset, color);	/* octant 2 */
+		screen_update(offset - dy - dxoffset, color);	/* octant 3 */
+		screen_update(offset - dy + dxoffset, color);	/* octant 4 */
+		screen_update(offset - dx + dyoffset, color);	/* octant 5 */
+		screen_update(offset + dx + dyoffset, color);	/* octant 6 */
+		screen_update(offset + dy + dxoffset, color);	/* octant 7 */
 
 		dx++;
 		n += invradius;
@@ -454,14 +452,14 @@ void fill_circle(int x, int y, int radius, byte color) {
 
 		for (i = dy; i >= dx; i--, dyoffset -= screen_width) {
 
-				screen_update(offset + i - dxoffset, color);
-				screen_update(offset + dx - dyoffset, color);
-				screen_update(offset - dx - dyoffset, color);
-				screen_update(offset - i - dxoffset, color);
-				screen_update(offset - i + dxoffset, color);
-				screen_update(offset - dx + dyoffset, color);
-				screen_update(offset + dx + dyoffset, color);
-				screen_update(offset + i + dxoffset, color);
+			screen_update(offset + i - dxoffset, color);
+			screen_update(offset + dx - dyoffset, color);
+			screen_update(offset - dx - dyoffset, color);
+			screen_update(offset - i - dxoffset, color);
+			screen_update(offset - i + dxoffset, color);
+			screen_update(offset - dx + dyoffset, color);
+			screen_update(offset + dx + dyoffset, color);
+			screen_update(offset + i + dxoffset, color);
 
 		}
 

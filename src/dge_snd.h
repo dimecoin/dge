@@ -3,10 +3,8 @@
 
 #include "dge.h"
 
-
 void pc_sound(int note);
 
 void stop_all_sounds();
-
 
 #endif

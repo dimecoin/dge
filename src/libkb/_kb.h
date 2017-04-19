@@ -226,7 +226,7 @@ extern "C" {
 #define KB_OUTP8(a,b)		outp(a,b)
 #define KB_INT86_REGS		union REGS
 #define KB_INT86(n,r)		int86(n,r,r)
-#elif defined(__WATCOMC__) // 	&& defined(MSDOS)
+#elif defined(__WATCOMC__)	//   && defined(MSDOS)
 #include <dos.h>
 #include <bios.h>
 #include <i86.h>

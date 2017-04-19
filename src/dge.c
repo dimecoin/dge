@@ -33,7 +33,6 @@ void dge_init(enum RENDER_MODE mode, int width, int height) {
 
 	dge_graphics_init(mode, width, height);
 
-
 	init_once = true;
 
 }
