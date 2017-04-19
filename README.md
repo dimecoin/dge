@@ -40,8 +40,6 @@ Compilers:
 
 * DJGpp 6.3.0 (cross compile and native)
 * OpenWatcom 1.9 (cross compile and native)
-* Turbo C 3.2 (native)
-* Borland C (Not test yet, but should work)
 
 CPUs
 * 486
