@@ -75,6 +75,10 @@ A lot of the rendering code is taken from Dave Breckeen.  His license is as foll
 
 _"This product uses DOS/32 Advanced DOS Extender technology."_
 
+**libkb**
+
+This product uses libkb Version 1.01, 03 Jun 1998.  Please see [kb.h](https://github.com/dimecoin/dge/blob/master/src/libkb/kb.h) for more details.  (A very small modification was made to kb.h and \_handler.h to get OpenWatcom 1.9 to compile.)
+
 **Runtimes**
 
 Please see runtimes directory for 3rd party licenses for DJGPP and OpenWatcom (DOS32/A).
