@@ -1,7 +1,6 @@
 
 Build
 	build under bcc
-	clean up all warnings.
 
 Graphics
 	allow differant modes
@@ -14,12 +13,10 @@ Input
 	mouse input
 
 Sound
-	pc speaker
 	soundblaster
 
 Other
 	add build type
-	Add mclock variable/macro
 	add splash screen
 
 Config
@@ -27,8 +24,11 @@ Config
 	Setup menu/Writeable config.
 
 DONE
-	build under djgpp
-	build under tcc
+	Add mclock variable/macro
+	pc speaker
+	clean up all warnings.
 	load and display bitmaps
+	build under tcc
+	build under djgpp
 
 
