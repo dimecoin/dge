@@ -6,8 +6,11 @@ A "modern" **D**OS **G**ame **E**ngine written in C that is fast, flexiable and 
 
 ## Screen shots
 
-![screenshot_1](https://github.com/dimecoin/dge/blob/master/screenshots/screenshot_1.png "screen_shot1")
-![screenshot_2](https://github.com/dimecoin/dge/blob/master/screenshots/screenshot_2.png "screen_shot2")
+![screenshot_3](https://github.com/dimecoin/dge/blob/master/screenshots/screenshot_3.png "screen_shot3")
+![screenshot_4](https://github.com/dimecoin/dge/blob/master/screenshots/screenshot_4.png "screen_shot4")
+![screenshot_5](https://github.com/dimecoin/dge/blob/master/screenshots/screenshot_5.png "screen_shot5")
+
+More screenshots in [Screen Shots Directory](https://github.com/dimecoin/dge/tree/master/screenshots)
 
 ## Compatiablity
 
