@@ -1,4 +1,3 @@
-#include "dge.h"
 #include "dge_gfx.h"
 
 int screen_width = -1;
@@ -139,7 +138,7 @@ void graphics_begin() {
 
 }
 
-char fps_text[8];
+char fps_text[9];
 char delta_text[13];
 void graphics_end() {
 
@@ -213,7 +212,7 @@ void draw_pixel(int x, int y, byte color) {
 	}
 
 	if (render_mode == MEMMAP || render_mode == DOUBLEBUFF) {
-		screen[y * screen_width + x] = color;
+		screen_update(y * screen_width + x, color);
 		return;
 	}
 
@@ -291,12 +290,12 @@ void draw_rect(int left, int top, int right, int bottom, byte color) {
 		bottom_offset = (bottom << 8) + (bottom << 6);
 
 		for (i = left; i <= right; i++) {
-			screen[top_offset + i] = color;
-			screen[bottom_offset + i] = color;
+			screen_update(top_offset + i, color);
+			screen_update(bottom_offset + i,color);
 		}
 		for (i = top_offset; i <= bottom_offset; i += screen_width) {
-			screen[left + i] = color;
-			screen[right + i] = color;
+			screen_update(left + i,  color);
+			screen_update(right + i,  color);
 		}
 
 		return;
@@ -398,13 +397,17 @@ void clear_screen(byte color) {
 
 }
 
-// This is used internally to bound check our double_buffer, because you can crash if written outside of it.
-// It is only really a problem for DJGPP builds with DOUBLEBUFF... 
-void safe_screen_update(int value, byte color) {
+#if defined (__DJGPP__) || defined (__WATCOMC__)
+inline 
+#endif 
+// Should this be defined as macro?  Might be slow for Turbo C
+void screen_update(int value, byte color) {
 
+#ifdef BOUND_CHECKS
 	if (value < 0 || value >= screen_size) {
 		return;
 	}
+#endif
 
 	screen[value] = color;
 }
@@ -421,27 +424,14 @@ void draw_circle(int x, int y, int radius, byte color) {
 		dxoffset = (dx << 8) + (dx << 6);
 		dyoffset = (dy << 8) + (dy << 6);
 
-		if (render_mode == DOUBLEBUFF) {
-
-			safe_screen_update(offset + dy - dxoffset, color);
-			safe_screen_update(offset + dx - dyoffset, color);	/* octant 1 */
-			safe_screen_update(offset - dx - dyoffset, color);	/* octant 2 */
-			safe_screen_update(offset - dy - dxoffset, color);	/* octant 3 */
-			safe_screen_update(offset - dy + dxoffset, color);	/* octant 4 */
-			safe_screen_update(offset - dx + dyoffset, color);	/* octant 5 */
-			safe_screen_update(offset + dx + dyoffset, color);	/* octant 6 */
-			safe_screen_update(offset + dy + dxoffset, color);	/* octant 7 */
-
-		} else {
-			screen[offset + dy - dxoffset] = color;	/* octant 0 */
-			screen[offset + dx - dyoffset] = color;	/* octant 1 */
-			screen[offset - dx - dyoffset] = color;	/* octant 2 */
-			screen[offset - dy - dxoffset] = color;	/* octant 3 */
-			screen[offset - dy + dxoffset] = color;	/* octant 4 */
-			screen[offset - dx + dyoffset] = color;	/* octant 5 */
-			screen[offset + dx + dyoffset] = color;	/* octant 6 */
-			screen[offset + dy + dxoffset] = color;	/* octant 7 */
-		}
+			screen_update(offset + dy - dxoffset, color);
+			screen_update(offset + dx - dyoffset, color);	/* octant 1 */
+			screen_update(offset - dx - dyoffset, color);	/* octant 2 */
+			screen_update(offset - dy - dxoffset, color);	/* octant 3 */
+			screen_update(offset - dy + dxoffset, color);	/* octant 4 */
+			screen_update(offset - dx + dyoffset, color);	/* octant 5 */
+			screen_update(offset + dx + dyoffset, color);	/* octant 6 */
+			screen_update(offset + dy + dxoffset, color);	/* octant 7 */
 
 		dx++;
 		n += invradius;
@@ -464,29 +454,14 @@ void fill_circle(int x, int y, int radius, byte color) {
 
 		for (i = dy; i >= dx; i--, dyoffset -= screen_width) {
 
-			if (render_mode == DOUBLEBUFF) {
-
-				safe_screen_update(offset + i - dxoffset, color);
-				safe_screen_update(offset + dx - dyoffset, color);
-				safe_screen_update(offset - dx - dyoffset, color);
-				safe_screen_update(offset - i - dxoffset, color);
-				safe_screen_update(offset - i + dxoffset, color);
-				safe_screen_update(offset - dx + dyoffset, color);
-				safe_screen_update(offset + dx + dyoffset, color);
-				safe_screen_update(offset + i + dxoffset, color);
-
-			} else {
-
-				screen[offset + i - dxoffset] = color;
-				screen[offset + dx - dyoffset] = color;
-				screen[offset - dx - dyoffset] = color;
-				screen[offset - i - dxoffset] = color;
-				screen[offset - i + dxoffset] = color;
-				screen[offset - dx + dyoffset] = color;
-				screen[offset + dx + dyoffset] = color;
-				screen[offset + i + dxoffset] = color;
-
-			}
+				screen_update(offset + i - dxoffset, color);
+				screen_update(offset + dx - dyoffset, color);
+				screen_update(offset - dx - dyoffset, color);
+				screen_update(offset - i - dxoffset, color);
+				screen_update(offset - i + dxoffset, color);
+				screen_update(offset - dx + dyoffset, color);
+				screen_update(offset + dx + dyoffset, color);
+				screen_update(offset + i + dxoffset, color);
 
 		}
 

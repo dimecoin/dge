@@ -13,7 +13,7 @@ void runCircleTest(enum RENDER_MODE mode, bool fill);
 void fontColorTest();
 
 float sleep_time = 0;
-long object_count = 100L;
+long object_count = 200L;
 
 void main(int argc, char *argv[]) {
 
@@ -25,17 +25,15 @@ void main(int argc, char *argv[]) {
 	mode = DOUBLEBUFF;
 	//mode = MEMMAP;
 
-	continuous_rendering = false;
+	continuous_rendering = true;
 	vsync = true;
 	show_fps=true;
 
 	dge_init(mode, 320, 200);
 
 	while (1) {
-		//runAllTests(mode);
+		runAllTests(mode);
 
-		runCircleTest(mode, false);
-		//fontColorTest();
 
 	}
 

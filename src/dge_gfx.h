@@ -73,7 +73,6 @@ extern word clock_start_time;
 extern float clock_cum_time, delta;
 
 
-
 void dge_graphics_init(enum RENDER_MODE mode, int width, int height);
 void set_palette(byte * palette);
 
@@ -82,6 +81,11 @@ void dge_graphics_shutdown();
 void graphics_begin();
 void graphics_end();
 void wait_for_retrace(void);
+
+// This is used internally to bound check our double_buffer, because you can crash if written outside of it.
+// It is only really a problem for DJGPP builds with DOUBLEBUFF...
+// In dge.h you can disable BOUND_CHECK
+void screen_update(int value, byte color); 
 
 void set_mode(byte mode);
 

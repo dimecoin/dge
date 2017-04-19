@@ -9,6 +9,7 @@
 #include <math.h>
 #include <string.h>
 
+
 #if defined (__DJGPP__) || defined (__WATCOMC__)
 #include <unistd.h>
 #endif
@@ -23,6 +24,12 @@
 /* macro to write a word to a port */
 #define word_out(port,register,value) \
 	  outpw(port,(((word)value<<8) + register))
+
+
+// If this is defined, it will do bound checks on screen writes.
+// Can be disabled to speed things up.
+// But will crash if you write outside of screen in DJGPP/DOUBLEBUFF
+#define BOUND_CHECKS 1
 
 typedef enum { false, true } bool;
 typedef unsigned char byte;
