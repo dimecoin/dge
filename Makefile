@@ -8,7 +8,7 @@
 export WATCOM:=${HOME}/opt/openwatcom/
 export EDPATH:=${WATCOM}/eddat
 export WIPFC:=${WATCOM}/wipfc
-export INCLUDE:=${WATCOM}/h
+export INCLUDE:=${WATCOM}/h:src/libkb
 export LIB:=${WATCOM}/lib386/dos/:${WATCOM}/lib386:.
 
 #####################################################
@@ -27,7 +27,8 @@ export PATH:=${WATCOM}/binl:${DJGPP_PREFIX}/bin:${PATH}
 # Envoriment setup
 
 SRC=src
-INCS=$(SRC)/dge.c $(SRC)/dge_gfx.c $(SRC)/dge_bmp.c $(SRC)/dge_snd.c
+INCS=$(SRC)/dge.c $(SRC)/dge_gfx.c $(SRC)/dge_bmp.c $(SRC)/dge_snd.c $(SRC)/libkb/kb.h
+#$(SRC)/libkb/kb.c
 PRG=test_gfx
 
 default: clean setup both
@@ -42,15 +43,18 @@ setup:
 both: dj ow
 
 ow:
-	wcl386 -l=dos4g -lr -4 -ot -oi -lr $(SRC)/$(PRG).c $(INCS)
+	# # flat memory model, no stack overflow checks, optimize, all warnings
+	# CFLAGS = -mf -s -ox -wx -zq -I.
+
+	wcl386 -l=dos4g -lr -4 -ot -oi -lr $(SRC)/$(PRG).c $(INCS) $(SRC)/libkb/*.c -I$(SRC)/libkb
 	cp *.exe build/ow;
 	rm *.o
 	ls -l build/ow/*.exe;
 
-
 dj:
 	i586-pc-msdosdjgpp-gcc -pipe -O2 -fomit-frame-pointer -funroll-loops -ffast-math \
-	       $(SRC)/$(PRG).c $(INCS) -o build/dj/$(PRG).exe
+		-Isrc/libkb/ \
+	       $(SRC)/$(PRG).c $(INCS) $(SRC)/libkb/*.c -o build/dj/$(PRG).exe
 	ls -l build/dj/*.exe
 
 clean:

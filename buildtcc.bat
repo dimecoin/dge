@@ -23,12 +23,18 @@ echo ---------------------------------------------------
 REM requires Large memory model in most cases (-ml)
 REM http://www.digitalmars.com/ctg/ctgMemoryModel.html
 
+
+
+cd %DGE_DIR%\src\libkb
+tcc.exe -ml -y -G -O -C -j1 -I%INCLUDE% -I%DGE_DIR%\src\libkb -L%LIB% kb*.c
+copy %DGE_DIR%\src\libkb\*.OBJ %DGE_DIR%\src\
+
 cd %DGE_DIR%\src
+tcc.exe -ml -y -G -O -C -j1 -I%INCLUDE% -I%DGE_DIR%\src\libkb -L%LIB% tst_inpt.c dge*.c
+REM  libkb\*.c
+REM  dge_bmp.c dge_gfx.c dge_snd.c
+REM kbhandle.c kblinux.c kbmlock.c kbos.c kbsignal.c kbtables.c
 
-delete *.OBJ
-delete *.EXE
-
-tcc.exe -ml -y -G -O -C -j1 -I%INCLUDE% -L%LIB% %1.c dge.c dge_bmp.c dge_gfx.c dge_snd.c
 
 mkdir %DGE_DIR%\build\tc
 copy *.exe %DGE_DIR%\build\tc
