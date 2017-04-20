@@ -10,6 +10,18 @@
 #include <string.h>
 #include <float.h>
 
+#ifdef __WATCOMC__
+#define BUILD_TYPE "OpenWatcom"
+#elif __DJGPP__
+#define BUILD_TYPE "djgpp"
+#elif __TURBOC__
+#define BUILD_TYPE "TurboC"
+#elif __BORLANDC__
+#define BUILD_TYPE "BorlandC"
+#else
+#define BUILD_TYPE "Unknown"
+#endif
+
 #if defined (__DJGPP__) || defined (__WATCOMC__)
 #include <unistd.h>
 #endif
@@ -27,7 +39,6 @@
 
 #define MAX(a,b) ((a) > (b) ? a : b)
 #define MIN(a,b) ((a) < (b) ? a : b)
-
 
 #ifdef __WATCOMC__
 int round(float num);
