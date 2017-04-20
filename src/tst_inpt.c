@@ -16,12 +16,22 @@ int main() {
 	enum RENDER_MODE mode = DOUBLEBUFF;
 	float x, y;
 	int ix, iy;
+	int i=0;
+	int ii=0;
+	int xs[100];
+	int ys[100];
+
 	// pixels per second
 	int speed = 100; 
 	int half_size = 20;
 	byte color = 0;
 
 	char coords_text[50];
+
+	for (i=0; i<100; i++) {
+		xs[i] = 0;
+		ys[i] = 0;
+	}
 
         continuous_rendering = false;
         vsync = true;
@@ -80,6 +90,23 @@ int main() {
 
 		graphics_begin();
 
+		xs[ii] = ix;
+		ys[ii] = iy;
+		for (i=0;i<100; i++) {
+			if (xs[i] != 0) {
+				draw_rect(xs[i]-half_size, ys[i]-half_size, xs[i]+half_size-1, ys[i]+half_size-1, color);
+				draw_line(xs[i], ys[i], ix, iy, color+1);
+				draw_line(xs[i]-half_size, ys[i]-half_size, ix, iy, color+9);
+				draw_line(xs[i]+half_size, ys[i]+half_size, ix, iy, color+9);
+				draw_line(xs[i], ys[i]+half_size, ix, iy, color+9);
+				draw_line(xs[i]+half_size, ys[i], ix, iy, color+9);
+				draw_line(xs[i], ys[i]-half_size, ix, iy, color+9);
+				draw_line(xs[i]-half_size, ys[i], ix, iy, color+9);
+			}
+		}
+
+		print_text(1,4, PFC_GREEN, BUILD_TYPE);
+
 		sprintf(coords_text, "[%.2fx%.2f]", x, y);
 		print_text(1,5, PFC_GREEN, coords_text);
 
@@ -87,21 +114,24 @@ int main() {
 		print_text(1,6, PFC_RED, coords_text);
 
 		fill_rect(ix-half_size, iy-half_size, ix+half_size-1, iy+half_size-1, color);
-		color++;
 
-		draw_rect(ix-half_size, iy-half_size, ix+half_size-1, iy+half_size-1, 1);
+		draw_rect(ix-half_size, iy-half_size, ix+half_size-1, iy+half_size-1, 2);
 
 		draw_line(0,0, ix, iy, color);
-		color++;
 		draw_line(screen_width, 0, ix, iy, color);
-		color++;
 		draw_line(screen_width, screen_height, ix, iy, color);
-		color++;
 		draw_line(0, screen_height, ix, iy, color);
-		color++;
-
 
 		graphics_end();
+
+
+		color++;
+		ii++;
+		if (ii>99) {
+			ii=0;
+		}
+
+
 	}
 
 
