@@ -23,6 +23,9 @@ Config
 	Readable config
 	Setup menu/Writeable config.
 
+bugs:
+	rect draw 1 pixel to wide on right and bottom?	
+
 DONE
 	Add mclock variable/macro
 	pc speaker

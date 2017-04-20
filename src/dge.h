@@ -8,6 +8,7 @@
 #include <conio.h>
 #include <math.h>
 #include <string.h>
+#include <float.h>
 
 #if defined (__DJGPP__) || defined (__WATCOMC__)
 #include <unistd.h>
@@ -23,6 +24,15 @@
 /* macro to write a word to a port */
 #define word_out(port,register,value) \
 	  outpw(port,(((word)value<<8) + register))
+
+#define MAX(a,b) ((a) > (b) ? a : b)
+#define MIN(a,b) ((a) < (b) ? a : b)
+
+
+#ifdef __WATCOMC__
+int round(float num);
+#endif
+ 
 
 // If this is defined, it will do bound checks on screen writes.
 // Can be disabled to speed things up.
@@ -53,5 +63,8 @@ extern bool init_once;
 void dge_init(enum RENDER_MODE mode, int width, int height);
 
 void dge_shutdown();
+
+
+
 
 #endif

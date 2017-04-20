@@ -27,7 +27,7 @@ export PATH:=${WATCOM}/binl:${DJGPP_PREFIX}/bin:${PATH}
 # Envoriment setup
 
 SRC=src
-INCS=$(SRC)/dge.c $(SRC)/dge_gfx.c $(SRC)/dge_bmp.c $(SRC)/dge_snd.c $(SRC)/libkb/kb.h
+INCS=$(SRC)/dge.c $(SRC)/dge_gfx.c $(SRC)/dge_bmp.c $(SRC)/dge_snd.c $(SRC)/dge_inpt.c $(SRC)/libkb/kb.h
 #$(SRC)/libkb/kb.c
 PRG=test_gfx
 

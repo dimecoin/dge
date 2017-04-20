@@ -1,6 +1,14 @@
 #include "dge.h"
 #include "dge_gfx.h"
 #include "dge_snd.h"
+#include "dge_inpt.h"
+
+#ifdef __WATCOMC__
+int round(float num) {
+	return num < 0 ? num - 0.5 : num + 0.5;
+}
+#endif
+
 
 /* this points to the 18.2hz system clock */
 #ifdef __WATCOMC__
@@ -33,6 +41,8 @@ void dge_init(enum RENDER_MODE mode, int width, int height) {
 
 	dge_graphics_init(mode, width, height);
 
+	dge_input_init();
+
 	init_once = true;
 
 }
@@ -45,7 +55,11 @@ void dge_shutdown() {
 
 	stop_all_sounds();
 
+	dge_input_shutdown();
+
 	dge_graphics_shutdown();
 
 	exit(0);
 }
+
+
