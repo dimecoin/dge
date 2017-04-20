@@ -58,5 +58,5 @@ dj:
 	ls -l build/dj/*.exe
 
 clean:
-	rm -rf *.o *.err *.exe *~ build/ow/* build/dj/* 2> /dev/null || true
+	rm -rf *.o *.err *.exe *~ build/ow/* build/dj/* $(SRC)/libkb/*~ 2> /dev/null || true
 	rm $(SRC)/*.err $(SRC)/*~ 2> /dev/null || true
