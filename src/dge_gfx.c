@@ -30,7 +30,7 @@ byte background_color = 0;
 
 bool show_fps = true;
 
-int fps_counter, fps_avg;
+short fps_counter, fps_avg;
 word clock_start_time;
 float clock_cum_time, delta;
 
@@ -66,6 +66,7 @@ void dge_graphics_init(enum RENDER_MODE mode, int width, int height) {
 	}
 	// Finally switch our mode.
 	set_mode(VGA_256_COLOR_MODE);
+
 
 	switch (mode) {
 	case BIOS:
@@ -166,10 +167,10 @@ void graphics_end() {
 
 		fps_counter++;
 		clock_cum_time += delta;
-		if (clock_cum_time >= 1.0f) {
+		if (clock_cum_time >= 1.0f || clock_cum_time < 0) {
 			fps_avg = fps_counter;
 
-			if (fps_avg > 999) {
+			if (fps_avg > 999 || fps_avg < 0) {
 				fps_avg = 999;
 			}
 

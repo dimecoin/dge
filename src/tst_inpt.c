@@ -20,6 +20,8 @@ int main() {
 	int ii=0;
 	int xs[100];
 	int ys[100];
+	char key;
+	int value=0;
 
 	// pixels per second
 	int speed = 100; 
@@ -42,26 +44,27 @@ int main() {
        	x = screen_width/2;
 	y = screen_height/2;
 
-/*
+		
+
+
 	while (1) {
+
 		kb_update();
 		if (kb_kbhit()) {
-	 		char key = key = kb_getkey();
-			printf("I:%c", key);
-			fflush(NULL);
+			key = kb_getkey();
+
+			if (key == 'i') {
+				value++;
+			}
+			if (key == 'k') {
+				value--;
+			}
+
 		}
 
 		char key = kb_keycode(kb_last_key());
 		//printf("C:%c", key);
 		fflush(NULL);
-		
-
-		delay(100);
-
-	}
-*/
-
-	while (1) {
 
 
 		if (key_pressed(KEY_UP)) {
@@ -94,6 +97,7 @@ int main() {
 		ys[ii] = iy;
 		for (i=0;i<100; i++) {
 			if (xs[i] != 0) {
+				/*
 				draw_rect(xs[i]-half_size, ys[i]-half_size, xs[i]+half_size-1, ys[i]+half_size-1, color);
 				draw_line(xs[i], ys[i], ix, iy, color+1);
 				draw_line(xs[i]-half_size, ys[i]-half_size, ix, iy, color+9);
@@ -102,6 +106,7 @@ int main() {
 				draw_line(xs[i]+half_size, ys[i], ix, iy, color+9);
 				draw_line(xs[i], ys[i]-half_size, ix, iy, color+9);
 				draw_line(xs[i]-half_size, ys[i], ix, iy, color+9);
+				*/
 			}
 		}
 
@@ -123,6 +128,9 @@ int main() {
 		draw_line(0, screen_height, ix, iy, color);
 
 		graphics_end();
+
+		sprintf(coords_text, "Value: %d", value);
+		print_text(2,10, PFC_WHITE, coords_text);
 
 
 		color++;
