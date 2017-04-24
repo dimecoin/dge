@@ -19,9 +19,7 @@ export LIB:=${WATCOM}/lib386/dos/:${WATCOM}/lib386:.
 export DJGPP_PREFIX=${HOME}/opt/djgpp
 export BASE_DIR=${DJGPP_PREFIX}
 
-
 export PATH:=${WATCOM}/binl:${DJGPP_PREFIX}/bin:${PATH}
-
 
 #####################################################
 # Envoriment setup
@@ -30,6 +28,10 @@ SRC=src
 INCS=$(SRC)/dge.c $(SRC)/dge_gfx.c $(SRC)/dge_bmp.c $(SRC)/dge_snd.c $(SRC)/dge_inpt.c $(SRC)/libkb/kb.h
 #$(SRC)/libkb/kb.c
 PRG=test_gfx
+
+#comment out for asserts
+DJDFLAGS=-DNDEBUG
+OWDFLAGS=-dNDEBUG
 
 default: clean setup both
 
@@ -46,13 +48,13 @@ ow:
 	# # flat memory model, no stack overflow checks, optimize, all warnings
 	# CFLAGS = -mf -s -ox -wx -zq -I.
 
-	wcl386 -l=dos4g -lr -4 -ot -oi -lr $(SRC)/$(PRG).c $(INCS) $(SRC)/libkb/*.c -I$(SRC)/libkb
+	wcl386 -l=dos4g -d0 -lr -4 -4r -4s -ox -ot -om -ob -ol -oh -oi -lr $(OWDFLAGS) $(SRC)/$(PRG).c $(INCS) $(SRC)/libkb/*.c -I$(SRC)/libkb
 	cp *.exe build/ow;
 	rm *.o
 	ls -l build/ow/*.exe;
 
 dj:
-	i586-pc-msdosdjgpp-gcc -pipe -O2 -fomit-frame-pointer -funroll-loops -ffast-math \
+	i586-pc-msdosdjgpp-gcc -pipe -O3 -fomit-frame-pointer -funroll-loops -ffast-math $(DJDFLAGS) \
 		-Isrc/libkb/ \
 	       $(SRC)/$(PRG).c $(INCS) $(SRC)/libkb/*.c -o build/dj/$(PRG).exe
 	ls -l build/dj/*.exe
@@ -60,3 +62,17 @@ dj:
 clean:
 	rm -rf *.o *.err *.exe *~ build/ow/* build/dj/* $(SRC)/libkb/*~ 2> /dev/null || true
 	rm $(SRC)/*.err $(SRC)/*~ 2> /dev/null || true
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -9,6 +9,7 @@
 #include <math.h>
 #include <string.h>
 #include <float.h>
+#include <assert.h>
 
 #ifdef __WATCOMC__
 #define BUILD_TYPE "OpenWatcom"
